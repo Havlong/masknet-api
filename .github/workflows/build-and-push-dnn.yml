@@ -1,4 +1,4 @@
-name: Build an push API to Github packages
+name: Build an push DNN to Github packages
 
 on:
   push:
