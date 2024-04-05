@@ -1,11 +1,12 @@
-from re import compile, sub
+from re import Match, compile, sub
 from os import environ
 
 
 secret_pattern = compile(r'\<\<.*?\>\>')
 
 
-def replace_with_secret(secret_str):
+def replace_with_secret(secret_str: Match[str]):
+    secret_str = secret_str.group()
     secret_var = secret_str[2:-2]
     if secret_var in environ:
         return environ[secret_var]
