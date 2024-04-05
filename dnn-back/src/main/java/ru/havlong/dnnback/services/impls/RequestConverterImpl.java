@@ -18,12 +18,12 @@ public class RequestConverterImpl implements RequestConverter {
 
     @Override
     public Request toDocument(RequestDto model) {
-        return new Request(snowflakeProvider.generateSnowflake(), null, model.embeddedParams(), model.textParams(),
+        return new Request(snowflakeProvider.generateSnowflake(), null, model.embeddedParams(),
                 model.numericalParams());
     }
 
     @Override
     public RequestDto toModel(Request document) {
-        return new RequestDto(document.getEmbeddedParams(), document.getTextParams(), document.getNumericalParams());
+        return new RequestDto(document.getEmbeddedParams(), document.getNumericalParams());
     }
 }

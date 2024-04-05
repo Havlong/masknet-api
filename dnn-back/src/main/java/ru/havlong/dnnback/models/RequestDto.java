@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.lang.Nullable;
 
-public record RequestDto(@Nullable Map<String, Integer> embeddedParams, @Nullable Map<String, String> textParams,
-        @Nullable Map<String, Double> numericalParams) {
+public record RequestDto(@Nullable Map<String, String> embeddedParams, @Nullable Map<String, Double> numericalParams) {
 
 }

@@ -13,7 +13,7 @@ def replace_with_secret(secret_str: Match[str]):
     return secret_str
 
 
-def inject_secrets(config_line):
+def inject_secrets(config_line: str):
     return sub(secret_pattern, replace_with_secret, config_line)
 
 

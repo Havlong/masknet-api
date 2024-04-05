@@ -31,9 +31,7 @@ public class Request {
     private Instant finishedAt;
 
     @Nullable
-    private Map<String, Integer> embeddedParams;
-    @Nullable
-    private Map<String, String> textParams;
+    private Map<String, String> embeddedParams;
     @Nullable
     private Map<String, Double> numericalParams;
 }

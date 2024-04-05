@@ -1,4 +1,4 @@
-from keras import layers, ops, Sequential
+from keras import layers, ops
 from keras.saving import register_keras_serializable
 
 

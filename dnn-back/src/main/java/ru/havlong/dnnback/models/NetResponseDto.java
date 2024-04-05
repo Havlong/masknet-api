@@ -1,9 +1,8 @@
 package ru.havlong.dnnback.models;
 
-import java.util.Map;
-
+import java.util.List;
 import org.springframework.lang.Nullable;
 
-public record NetResponseDto(@Nullable Map<String, Double> probabilities) {
+public record NetResponseDto(@Nullable List<Double> probabilities) {
 
 }
