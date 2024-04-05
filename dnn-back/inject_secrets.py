@@ -17,7 +17,7 @@ def inject_secrets(config_line):
 
 
 if __name__ == "__main__":
-    with open("src/main/resources/application.yml", "r") as config:
+    with open("dnn_back/src/main/resources/application.yml", "r") as config:
         config_lines = config.readlines()
-    with open("src/main/resources/application.yml", "w") as config:
+    with open("dnn_back/src/main/resources/application.yml", "w") as config:
         config.writelines(map(inject_secrets, config_lines))
