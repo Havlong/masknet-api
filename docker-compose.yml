@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: havlongdb
+    networks:
+     - masknet
+    logging:
+      driver: json-file
+  masknet:
+    image: ghcr.io/masknet-dnn
+    networks:
+     - masknet
+    logging:
+      driver: json-file
+  masknet-api:
+    image: ghcr.io/masknet-api
+    networks:
+      - masknet
+    logging:
+      driver: json-file
+
+networks:
+  masknet:
