@@ -5,6 +5,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: havlongdb
+    command: >
+      mongo -u mongo -p havlongdb --eval 'db.grantRolesToUser( "mongo", [ { role: "readWrite", db: "dnn" } ] );' admin
     networks:
      - masknet
     logging:
@@ -15,8 +17,17 @@ services:
      - masknet
     logging:
       driver: json-file
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
   masknet-api:
     image: ghcr.io/masknet-api
+    ports:
+      - "8081:8081"
     networks:
       - masknet
     logging:
