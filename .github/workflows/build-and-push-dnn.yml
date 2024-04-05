@@ -8,7 +8,7 @@ env:
 
   REGISTRY: ghcr.io
 
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: masknet-dnn
 
 
 jobs:
@@ -51,18 +51,6 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-        
-
-      - name: Add Envs
-        run: python ./dnn-back/inject_secrets.py
-        env:
-          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
-          MONGO_HOST: ${{ secrets.MONGO_HOST }}
-          MONGO_USER: ${{ secrets.MONGO_USER }}
-          MONGO_PASS: ${{ secrets.MONGO_PASS }}
-          CONTAINER_SHARD: ${{ secrets.CONTAINER_SHARD }}
-          DNN_HOST: ${{ secrets.DNN_HOST }}
-          DNN_PORT: ${{ secrets.DNN_PORT }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -70,8 +58,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: ./dnn-back/
-          file: ./dnn-back/Dockerfile
+          context: ./dnn-python/
+          file: ./dnn-python/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
