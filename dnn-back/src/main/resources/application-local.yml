@@ -1,0 +1,17 @@
+server:
+    port: 8080
+
+spring:
+  data:
+    mongodb:
+      host: "127.0.0.1"
+      port: 27017
+      database: "dnn"
+      username: "mongo"
+      password: "havlongdb"
+      authentication-database: "admin"
+
+app:
+  shardid: 5
+  dnn_hostname: "127.0.0.1"
+  dnn_port: 8081

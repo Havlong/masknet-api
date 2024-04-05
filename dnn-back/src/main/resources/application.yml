@@ -1,0 +1,17 @@
+server:
+    port: <<CONTAINER_PORT>>
+
+spring:
+  data:
+    mongodb:
+      host: "<<MONGO_HOST>>"
+      port: 27017
+      database: "dnn"
+      username: "<<MONGO_USER>>"
+      password: "<<MONGO_PASS>>"
+      authentication-database: "admin"
+
+app:
+  shardid: <<CONTAINER_SHARD>>
+  dnn_hostname: "<<DNN_HOST>>"
+  dnn_port: <<DNN_PORT>>
