@@ -54,8 +54,8 @@ jobs:
             type=sha
         
 
-      - name: Add Envs
-        run:
+#      - name: Add Envs
+#        run:
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
