@@ -4,7 +4,7 @@
   
   tasks:
   - name: Inject Secrets into docker-compose from Ansible Vault
-    script: ./inject_secrets.py ./docker-compose.yml
+    script: {{ playbook_dir }}/inject_secrets.py {{ playbook_dir }}/docker-compose.yml
     args:
       executable: /usr/bin/python3
     environment:
@@ -18,5 +18,29 @@
     register: injection_logs
 
   - name: Print Secret injection logs
-    debug:
-      var: injection_logs.stdout
+    ansible.builtin.debug:
+      var: injection_logs
+
+- name: Startup services
+  hosts: localhost
+
+  tasks:
+  - name: Shutdown active services
+    community.docker.docker_compose:
+      project_src: {{ playbook_dir }}
+      state: absent
+  
+  - name: Build and startup services
+    community.docker.docker_compose:
+      project_src: {{ playbook_dir }}
+      state: present
+    register: compose_logs
+  
+  - name: Show output
+    ansible.builtin.debug:
+      var: compose_logs
+
+  - name: Verify that Backend is running
+    ansible.builtin.assert:
+      that:
+        - "compose_logs.services.web.masknet-api.state.running"

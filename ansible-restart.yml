@@ -1,0 +1,19 @@
+- name: Restart Compose services
+  hosts: localhost
+
+  tasks:
+  - name: Restart services
+    community.docker.docker_compose:
+      project_src: {{ playbook_dir }}
+      build: false
+      restarted: true
+    register: compose_logs
+  
+  - name: Show output
+    ansible.builtin.debug:
+      var: compose_logs
+
+  - name: Verify that Backend is running
+    ansible.builtin.assert:
+      that:
+        - "compose_logs.services.web.masknet-api.state.running"
