@@ -1,18 +1,17 @@
 version: '3.4'
 services:
-  mongodb: # <<MONGO_HOST>>
+  <<MONGO_HOST>>:
     image: mongo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo     # <<MONGO_USER>>
-      MONGO_INITDB_ROOT_PASSWORD: havlongdb # <<MONGO_PASS>>
+      MONGO_INITDB_ROOT_USERNAME: <<MONGO_USER>>
+      MONGO_INITDB_ROOT_PASSWORD: <<MONGO_PASS>>
     command: >
-      mongo -u mongo -p havlongdb --eval 'db.grantRolesToUser( "mongo", [ { role: "readWrite", db: "dnn" } ] );' admin
-#     mongo -u <<MONGO_USER>> -p <<MONGO_PASS>> --eval 'db.grantRolesToUser( "<<MONGO_USER>>", [ { role: "readWrite", db: "dnn" } ] );' admin
+      mongo -u <<MONGO_USER>> -p "<<MONGO_PASS>>" --eval 'db.grantRolesToUser( "<<MONGO_USER>>", [ { role: "readWrite", db: "dnn" } ] );' admin
     networks:
      - masknet
     logging:
       driver: json-file
-  masknet: # <<DNN_HOST>>
+  <<DNN_HOST>>:
     image: ghcr.io/havlong/masknet-dnn
     networks:
      - masknet
@@ -27,7 +26,7 @@ services:
   masknet-api:
     image: ghcr.io/havlong/masknet-api
     ports:
-      - "8080:8080" # <<CONTAINER_PORT>>
+      - "<<CONTAINER_PORT>>:<<CONTAINER_PORT>>"
     networks:
       - masknet
     logging:

@@ -54,7 +54,7 @@ jobs:
         
 
       - name: Add Envs
-        run: python ./dnn-back/inject_secrets.py
+        run: python ./inject_secrets.py dnn-back/src/main/resources/application.yml
         env:
           CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
           MONGO_HOST: ${{ secrets.MONGO_HOST }}
