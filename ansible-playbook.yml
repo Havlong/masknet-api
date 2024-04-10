@@ -15,6 +15,7 @@
       MONGO_PASS: "{{ MONGO_PASS }}"
       DNN_HOST: "{{ DNN_HOST }}"
       DNN_PORT: "{{ DNN_PORT }}"
+      PROJECT_DIR: "{{ playbook_dir }}"
     register: injection_logs
 
   - name: Print Secret injection logs

@@ -1,8 +1,7 @@
 import os
+
 import pandas as pd
-
 import tensorflow as tf
-
 
 BATCH_SIZE = 256
 BUFFER_SIZE = 1024 * 1024
@@ -48,7 +47,7 @@ def prep_train_dataset(categorical_feats, numerical_feats, vocabs):
     data_path = os.path.join('data', 'shorter_dataset.csv')
     data = pd.read_csv(data_path)
 
-    data = preprocess_dataframe(data)
+    data = preprocess_dataframe(data, categorical_feats, numerical_feats, vocabs)
     train_ds = to_dataset(data, [*categorical_feats, *numerical_feats], 'DRK_YN')
 
     train_ds = train_ds.shuffle(BUFFER_SIZE, reshuffle_each_iteration=True)

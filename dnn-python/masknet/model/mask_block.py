@@ -12,10 +12,10 @@ class MaskBlock(layers.Layer):
         self.layer_norm = layers.LayerNormalization()
         self.feed_forward = layers.Dense(self.output_size, use_bias=False)
 
-
     def build(self, input_shape):
         if len(input_shape) != 2:
-            raise ValueError(f"A `MaskBlock` layer should be called on a list of exactly 2 inputs. Received: input_shape={input_shape}")
+            raise ValueError(
+                f"A `MaskBlock` layer should be called on a list of exactly 2 inputs. Received: input_shape={input_shape}")
 
         input_size, mask_size = input_shape
         input_size = input_size[-1]
@@ -29,21 +29,20 @@ class MaskBlock(layers.Layer):
             layers.Dense(input_size)
         ])
 
-
     def call(self, inputs):
         if not isinstance(inputs, (list, tuple)) or len(inputs) != 2:
-            raise ValueError(f"A `MaskBlock` layer should be called on a list of exactly 2 inputs. Received: inputs={inputs} (not a list of tensors)")
-        
+            raise ValueError(
+                f"A `MaskBlock` layer should be called on a list of exactly 2 inputs. Received: inputs={inputs} (not a list of tensors)")
+
         net_inputs, emb_inputs = inputs
-        
+
         output_mask = self.mask_layer(emb_inputs)
-        
+
         output = self.feed_forward(output_mask * net_inputs)
         output = self.layer_norm(output)
         output = ops.relu(output)
 
         return output
-
 
     def get_config(self):
         config = super().get_config()
@@ -51,5 +50,5 @@ class MaskBlock(layers.Layer):
             "output_size": self.output_size,
             "reduction_factor": self.reduction_factor
         })
-        
+
         return config

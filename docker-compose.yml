@@ -25,6 +25,8 @@ services:
     networks:
       - masknet
     command: "<<DNN_PORT>>"
+    volumes:
+      - "<<PROJECT_DIR>>/model:/tf/app/out"
     logging:
       driver: json-file
     deploy:

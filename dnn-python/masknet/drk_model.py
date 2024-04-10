@@ -1,13 +1,12 @@
 import os
 
-from keras.ops import sigmoid, convert_to_tensor, convert_to_numpy
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
+from keras.ops import sigmoid, convert_to_tensor, convert_to_numpy
 from keras.saving import load_model
 
-from drk_data import prep_embeddings, preprocess_data, prep_train_dataset
-from dto import Request, Params, Response
-from model.mask_net import MaskNet
-
+from masknet.drk_data import prep_embeddings, preprocess_data, prep_train_dataset
+from masknet.dto import Request, Params, Response
+from masknet.model.mask_net import MaskNet
 
 os.environ["KERAS_BACKEND"] = "tensorflow"
 model_name = 'parallel-masknet'
@@ -21,17 +20,14 @@ class ModelManager:
         self.vocab_sizes = [len(vocab) for vocab in self.vocabs]
         self.load_model()
 
-
     def load_model(self):
         if not os.path.exists(model_path):
             self.retrain()
         self.model = load_model(model_path)
 
-
     def params(self) -> Params:
         return Params(embedded_params=list(self.categorical_feats.keys()),
                       numerical_params=self.numerical_feats)
-
 
     def validate(self, input: Request) -> bool:
         for feat_name in self.categorical_feats:
@@ -41,7 +37,6 @@ class ModelManager:
             if feat_name not in input.numerical_params:
                 return False
         return True
-
 
     def feedforward(self, input: Request) -> Response:
         data = {}
@@ -64,9 +59,8 @@ class ModelManager:
 
         return Response(probabilities=convert_to_numpy(probs).tolist())
 
-
     def retrain(self) -> None:
-        train_ds = prep_train_dataset()
+        train_ds = prep_train_dataset(self.categorical_feats, self.numerical_feats, self.vocabs)
         new_model = MaskNet(
             categorical_feats=self.categorical_feats,
             vocab_sizes=self.vocab_sizes,

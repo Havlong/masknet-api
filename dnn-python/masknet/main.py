@@ -1,9 +1,8 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
 
-from dto import Request, Response, Params
-from drk_model import ModelManager
-
+from masknet.drk_model import ModelManager
+from masknet.dto import Request, Response, Params
 
 app = FastAPI()
 manager = ModelManager()
@@ -24,7 +23,7 @@ def retrain():
 
 @app.post('/request', status_code=200)
 def feed_forward(request: Request) -> Response:
-    if not(manager.validate(request)):
+    if not (manager.validate(request)):
         raise HTTPException(status_code=400)
     try:
         return manager.feedforward(request)
@@ -33,4 +32,4 @@ def feed_forward(request: Request) -> Response:
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8081)
+    uvicorn.run('masknet.main:app', port=8081)
