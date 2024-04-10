@@ -5,7 +5,6 @@ on:
     branches: [ "main" ]
 
 env:
-  REGISTRY: ghcr.io
   IMAGE_NAME: masknet-dnn
 
 
@@ -30,7 +29,6 @@ jobs:
       - name: Log into registry ghcr.io
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_TOKEN }}
 
