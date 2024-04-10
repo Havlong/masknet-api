@@ -16,7 +16,10 @@ logs_path = os.path.join('out', 'logs', model_name)
 
 class ModelManager:
     def __init__(self):
-        self.categorical_feats, self.numerical_feats, self.vocabs = prep_embeddings()
+        categorical_feats, numerical_feats, vocabs = prep_embeddings()
+        self.categorical_feats = categorical_feats
+        self.numerical_feats = numerical_feats
+        self.vocabs = vocabs
         self.vocab_sizes = [len(vocab) for vocab in self.vocabs]
         self.load_model()
 
