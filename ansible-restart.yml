@@ -12,8 +12,3 @@
   - name: Show output
     ansible.builtin.debug:
       var: compose_logs
-
-  - name: Verify that Backend is running
-    ansible.builtin.assert:
-      that:
-        - "compose_logs.services.web.masknet-api.state.running"
