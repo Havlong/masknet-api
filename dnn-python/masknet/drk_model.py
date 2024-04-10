@@ -1,6 +1,6 @@
 import os
 
-from keras.callbacks import EarlyStopping, TensorBoard
+from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 from keras.ops import sigmoid, convert_to_tensor, convert_to_numpy
 from keras.saving import load_model
 
@@ -70,8 +70,9 @@ class ModelManager:
         )
 
         model_callbacks = [
-            EarlyStopping(patience=10),
-            TensorBoard(log_dir=logs_path)
+            EarlyStopping(patience=10, monitor='accuracy', mode='max'),
+            TensorBoard(log_dir=logs_path),
+            ModelCheckpoint(model_path, monitor='accuracy', mode='max', save_best_only=True)
         ]
 
         new_model.fit(train_ds, epochs=20, callbacks=model_callbacks)
