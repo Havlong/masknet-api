@@ -24,7 +24,7 @@ services:
     image: "havlong/masknet-dnn:main"
     networks:
       - masknet
-    command: <<DNN_PORT>>
+    command: "<<DNN_PORT>>"
     logging:
       driver: json-file
     deploy:
@@ -45,4 +45,4 @@ services:
       driver: json-file
 
 networks:
-  masknet:
+  masknet: {}

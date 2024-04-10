@@ -46,6 +46,7 @@
     community.docker.docker_compose:
       project_src: "{{ playbook_dir }}"
       state: present
+      pull: true
     register: compose_logs
   
   - name: Show output
