@@ -13,6 +13,8 @@ services:
     image: "mongo:latest"
     depends_on:
       - <<MONGO_HOST>>
+    networks:
+      - masknet
     restart: "no"
     entrypoint: [ "mongosh",
       "--host", "<<MONGO_HOST>>",
