@@ -4,7 +4,7 @@
   tasks:
   - name: Restart services
     community.docker.docker_compose:
-      project_src: {{ playbook_dir }}
+      project_src: "{{ playbook_dir }}"
       build: false
       restarted: true
     register: compose_logs

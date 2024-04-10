@@ -48,7 +48,7 @@ def prep_train_dataset(categorical_feats, numerical_feats, vocabs):
     data = pd.read_csv(data_path)
 
     data = preprocess_dataframe(data, categorical_feats, numerical_feats, vocabs)
-    train_ds = to_dataset(data, [*categorical_feats, *numerical_feats], 'DRK_YN')
+    train_ds = to_dataset(data, [*categorical_feats, *numerical_feats], 'target')
 
     train_ds = train_ds.shuffle(BUFFER_SIZE, reshuffle_each_iteration=True)
     return train_ds.batch(BATCH_SIZE).prefetch(tf.data.AUTOTUNE)
