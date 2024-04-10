@@ -1,20 +1,30 @@
 version: '3.4'
 services:
   <<MONGO_HOST>>:
-    image: mongo
+    image: "mongo:latest"
     environment:
       MONGO_INITDB_ROOT_USERNAME: <<MONGO_USER>>
       MONGO_INITDB_ROOT_PASSWORD: <<MONGO_PASS>>
-    command: >
-      mongo -u <<MONGO_USER>> -p "<<MONGO_PASS>>" --eval 'db.grantRolesToUser( "<<MONGO_USER>>", [ { role: "readWrite", db: "dnn" } ] );' admin
     networks:
      - masknet
     logging:
       driver: json-file
+  mongosetup:
+    image: "mongo:latest"
+    depends_on:
+      - <<MONGO_HOST>>
+    restart: "no"
+    entrypoint: [ "mongo",
+      "-u", "<<MONGO_USER>>",
+      "-p", "<<MONGO_PASS>>",
+      "--eval", "db.grantRolesToUser( \"<<MONGO_USER>>\", [ { role: \"readWrite\", db: \"dnn\" } ] );",
+      "admin"
+    ]
   <<DNN_HOST>>:
-    image: havlong/masknet-dnn
+    image: "havlong/masknet-dnn:main"
     networks:
-     - masknet
+      - masknet
+    command: <<DNN_PORT>>
     logging:
       driver: json-file
     deploy:
@@ -24,7 +34,9 @@ services:
             - driver: nvidia
               capabilities: [ gpu ]
   masknet-api:
-    image: ghcr.io/havlong/masknet-api
+    image: "ghcr.io/havlong/masknet-api:main"
+    depends_on:
+      - <<MONGO_HOST>>
     ports:
       - "<<CONTAINER_PORT>>:<<CONTAINER_PORT>>"
     networks:
