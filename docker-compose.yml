@@ -14,11 +14,13 @@ services:
     depends_on:
       - <<MONGO_HOST>>
     restart: "no"
-    entrypoint: [ "mongo",
-      "-u", "<<MONGO_USER>>",
-      "-p", "<<MONGO_PASS>>",
-      "--eval", "db.grantRolesToUser( \"<<MONGO_USER>>\", [ { role: \"readWrite\", db: \"dnn\" } ] );",
-      "admin"
+    entrypoint: [ "mongosh",
+      "--host", "<<MONGO_HOST>>"
+      "--username", "<<MONGO_USER>>",
+      "--password", "<<MONGO_PASS>>",
+      "--authenticationDatabase", "admin",
+      "--eval", "use admin;",
+      "--eval", "db.grantRolesToUser( '<<MONGO_USER>>', [ { role: 'readWrite', db: 'dnn' } ] );"
     ]
   <<DNN_HOST>>:
     image: "havlong/masknet-dnn:main"
