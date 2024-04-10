@@ -2,7 +2,10 @@ name: Build an push DNN to Docker Hub
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
+    paths:
+      - "dnn-python/**"
 
 env:
   IMAGE_NAME: masknet-dnn

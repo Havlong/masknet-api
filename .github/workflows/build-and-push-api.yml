@@ -2,7 +2,11 @@ name: Build an push API to Github packages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
+    paths:
+      - "dnn-back/**"
+
 
 env:
 
