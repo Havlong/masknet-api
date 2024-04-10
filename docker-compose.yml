@@ -12,7 +12,7 @@ services:
     logging:
       driver: json-file
   <<DNN_HOST>>:
-    image: ghcr.io/havlong/masknet-dnn
+    image: havlong/masknet-dnn
     networks:
      - masknet
     logging:
